@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:converters="clr-namespace:DatarynxListView.Converters"
+             x:Class="DatarynxListView.Views.DetailsListPage">
+    <NavigationPage.TitleView>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="90"/>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="110"/>
+                <ColumnDefinition Width="50"/>
+            </Grid.ColumnDefinitions>
+            <Label Text="To-Do List" 
+                   HorizontalOptions="StartAndExpand"
+                   VerticalOptions="CenterAndExpand"/>
+            <Image Source="greendot.png" 
+                   Grid.Column="1" 
+                   HeightRequest="15" 
+                   WidthRequest="15"
+                   HorizontalOptions="StartAndExpand"/>
+            <Image Source="Refresh.png" 
+                   Grid.Column="2" 
+                   HeightRequest="30" 
+                   WidthRequest="30"
+                   HorizontalOptions="EndAndExpand"/>
+            <Image Source="filter.png" 
+                   Grid.Column="3" 
+                   HeightRequest="30" 
+                   WidthRequest="30"
+                   HorizontalOptions="EndAndExpand"/>
+            
+        </Grid>
+    </NavigationPage.TitleView>
+    <ContentPage.Resources>
+        <converters:ButtonVisiblityConverter x:Key="ButtonVisiblityConverter" />
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout>
+            <CollectionView Margin="10"
+                            x:Name="detailCollectionView"
+                            ItemsSource="{Binding CollectionViewSource}">
+                <CollectionView.Header>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="90"/>
+                            <ColumnDefinition Width="40"/>
+                            <ColumnDefinition Width="40"/>
+                            <ColumnDefinition Width="150"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Text="Sort By"/>
+                        <Label Text="BBD"
+                               Grid.Column="1"
+                               TextColor="Green"/>
+                        <Image Source="downArrow.png"
+                               Grid.Column="2"
+                               HeightRequest="15"
+                               WidthRequest="15"/>
+                        <Image Source="questionmark.png"
+                               Grid.Column="3"
+                               HeightRequest="15"
+                               WidthRequest="15"
+                               HorizontalOptions="EndAndExpand"/>
+                    </Grid>
+                </CollectionView.Header>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="10,5,0,10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="20" />
+                                <RowDefinition Height="20" />
+                                <RowDefinition Height="20" />
+                                <RowDefinition Height="20" />
+                                <RowDefinition Height="40" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="150" />
+                            </Grid.ColumnDefinitions>
+
+                            <Label Text="{Binding WeekNo}" />
+                            <Label  Grid.Row="1"    
+                                    Text="{Binding WeekDate}"/>
+                            <Label Grid.Row="2"  
+                                   Text="{Binding StoreName}"    
+                                   VerticalOptions="End" 
+                                   FontAttributes="Bold"/>
+                            <Label Grid.Row="3"   
+                                   Text="{Binding StoreAddress}"    
+                                   VerticalOptions="End" 
+                                   FontAttributes="Bold"/>
+                            <Label Grid.Row="4"    
+                                       Text="{Binding CodingType}"/>
+                            <Button Text="Stat Audit"
+                                        Grid.Row="4"
+                                        Grid.Column="1"
+                                        HeightRequest="30"
+                                        TextColor="White"
+                                        BackgroundColor="#4169E1"
+                                        IsVisible="{Binding .,Converter={StaticResource ButtonVisiblityConverter}, ConverterParameter={x:Reference detailCollectionView}}"
+                                        HorizontalOptions="CenterAndExpand"/>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
